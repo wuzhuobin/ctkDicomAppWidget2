@@ -77,10 +77,12 @@ public Q_SLOTS:
   void setDatabaseDirectory(const QString& directory);
   void onFileIndexed(const QString& filePath);
 
-  void openImportDialog();
-  void openExportDialog();
-  void openQueryDialog();
-  void onRemoveAction();
+  void on_ActionImport_triggered();
+  void on_ActionExport_triggered();
+  void on_ActionQuery_triggered();
+  void on_ActionClear_triggered();
+  void on_ActionSend_triggered();
+  void on_ActionRemove_triggered();
 
   void suspendModel();
   void resumeModel();
@@ -98,15 +100,15 @@ public Q_SLOTS:
   void onSeriesAdded(QString);
   void onInstanceAdded(QString);
 
-Q_SIGNALS:
-  /// Emited when directory is changed
-  void databaseDirectoryChanged(const QString&);
-  /// Emited when query/retrieve operation has happened
-  void queryRetrieveFinished();
-  /// Emited when the directory import operation has completed
-  void directoryImported();
-
-  void imagesExported(QStringList);
+//Q_SIGNALS:
+//  /// Emited when directory is changed
+//  void databaseDirectoryChanged(const QString&);
+//  /// Emited when query/retrieve operation has happened
+//  void queryRetrieveFinished();
+//  /// Emited when the directory import operation has completed
+//  void directoryImported();
+//
+//  void imagesExported(QStringList);
 
 protected:
     QScopedPointer<ctkDICOMAppWidget2Private> d_ptr;

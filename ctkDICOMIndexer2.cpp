@@ -125,6 +125,7 @@ bool ctkDICOMIndexer2::dcmftest(QString filePath) {
 		return false;
 	}
 	dicomFile.close();
+	return true;
 }
 
 

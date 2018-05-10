@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1203</width>
-    <height>942</height>
+    <width>912</width>
+    <height>896</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,11 +29,11 @@
       <bool>true</bool>
      </property>
      <addaction name="ActionImport"/>
-     <addaction name="ActionExport"/>
-     <addaction name="ActionQuery"/>
-     <addaction name="ActionClear"/>
-     <addaction name="ActionSend"/>
      <addaction name="ActionRemove"/>
+     <addaction name="ActionExport"/>
+     <addaction name="ActionSend"/>
+     <addaction name="ActionClear"/>
+     <addaction name="ActionQuery"/>
     </widget>
    </item>
    <item>
@@ -106,48 +106,19 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <property name="spacing">
-      <number>6</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <item>
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Patient ID</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTreeView" name="TreeView">
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QTreeView" name="TreeView">
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_8"/>
-     </item>
-     <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListView" name="listViewExport"/>
      </item>
     </layout>
    </item>
@@ -522,54 +493,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>ActionImport</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>ctkDICOMAppWidget2</receiver>
-   <slot>openImportDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ActionExport</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>ctkDICOMAppWidget2</receiver>
-   <slot>openExportDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ActionQuery</sender>
-   <signal>triggered(bool)</signal>
-   <receiver>ctkDICOMAppWidget2</receiver>
-   <slot>openQueryDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>239</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>NextImageButton</sender>
    <signal>clicked()</signal>
    <receiver>ctkDICOMAppWidget2</receiver>
@@ -697,27 +620,8 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>ActionRemove</sender>
-   <signal>triggered()</signal>
-   <receiver>ctkDICOMAppWidget2</receiver>
-   <slot>onRemoveAction()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>391</x>
-     <y>303</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
  <slots>
-  <slot>openImportDialog()</slot>
-  <slot>openExportDialog()</slot>
-  <slot>openQueryDialog()</slot>
   <slot>onDatabaseDirectoryChaged(QString)</slot>
   <slot>onNextImage()</slot>
   <slot>onPreviousImage()</slot>
@@ -727,6 +631,5 @@
   <slot>onPreviousStudy()</slot>
   <slot>onAutoPlayCheckboxStateChanged(int)</slot>
   <slot>onThumbnailWidthSliderValueChanged(int)</slot>
-  <slot>onRemoveAction()</slot>
  </slots>
 </ui>
