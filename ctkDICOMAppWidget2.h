@@ -37,7 +37,6 @@ class ctkDICOMAppWidget2 : public QWidget
   Q_OBJECT
   Q_PROPERTY(ctkDICOMDatabase* database READ database)
   Q_PROPERTY(QString databaseDirectory READ databaseDirectory WRITE setDatabaseDirectory)
-  Q_PROPERTY(bool searchWidgetPopUpMode READ searchWidgetPopUpMode WRITE setSearchWidgetPopUpMode)
   Q_PROPERTY(QStringList tagsToPrecache READ tagsToPrecache WRITE setTagsToPrecache)
   Q_PROPERTY(bool displayImportSummary READ displayImportSummary WRITE setDisplayImportSummary)
 
@@ -61,11 +60,6 @@ public:
   /// Also provides a dialog box for progress
   void updateDatabaseSchemaIfNeeded();
 
-  /// Setting search widget pop-up mode
-  /// Default value is false. Setting it to true will make
-  /// search widget to be displayed as pop-up widget
-  void setSearchWidgetPopUpMode(bool flag);
-  bool searchWidgetPopUpMode();
   ctkDICOMDatabase* database();
 
   /// Option to show or not import summary dialog.
@@ -155,12 +149,6 @@ protected Q_SLOTS:
 
     /// To be called after image preview displayed an image
     void onImagePreviewDisplayed(int imageID, int count);
-
-private Q_SLOTS:
-
-    void onSearchPopUpButtonClicked();
-
-    void onSearchWidgetTopLevelChanged(bool topLevel);
 
 private:
   Q_DECLARE_PRIVATE(ctkDICOMAppWidget2);

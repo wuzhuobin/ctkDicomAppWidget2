@@ -46,7 +46,7 @@
 // ctkDICOMCore includes
 #include "ctkDICOMDatabase.h"
 #include "ctkDICOMFilterProxyModel.h"
-#include "ctkDICOMIndexer.h"
+#include "ctkDICOMIndexer2.h"
 #include "ctkDICOMModel.h"
 
 // ctkDICOMWidgets includes
@@ -82,7 +82,7 @@ public:
   QSharedPointer<ctkDICOMThumbnailGenerator> ThumbnailGenerator;
   ctkDICOMModel DICOMModel;
   ctkDICOMFilterProxyModel DICOMProxyModel;
-  QSharedPointer<ctkDICOMIndexer> DICOMIndexer;
+  QSharedPointer<ctkDICOMIndexer2> DICOMIndexer;
   QProgressDialog *IndexerProgress;
   QProgressDialog *UpdateSchemaProgress;
 
@@ -93,8 +93,6 @@ public:
   QSqlDatabase EmptyDatabase;
 
   QTimer* AutoPlayTimer;
-
-  bool IsSearchWidgetPopUpMode;
 
   // local count variables to keep track of the number of items
   // added to the database during an import operation
@@ -112,7 +110,7 @@ ctkDICOMAppWidget2Private::ctkDICOMAppWidget2Private(ctkDICOMAppWidget2* parent)
   DICOMDatabase = QSharedPointer<ctkDICOMDatabase> (new ctkDICOMDatabase);
   ThumbnailGenerator = QSharedPointer <ctkDICOMThumbnailGenerator> (new ctkDICOMThumbnailGenerator);
   DICOMDatabase->setThumbnailGenerator(ThumbnailGenerator.data());
-  DICOMIndexer = QSharedPointer<ctkDICOMIndexer> (new ctkDICOMIndexer);
+  DICOMIndexer = QSharedPointer<ctkDICOMIndexer2> (new ctkDICOMIndexer2);
   IndexerProgress = 0;
   UpdateSchemaProgress = 0;
   DisplayImportSummary = true;
@@ -237,8 +235,6 @@ ctkDICOMAppWidget2::ctkDICOMAppWidget2(QWidget* _parent):Superclass(_parent),
   Q_D(ctkDICOMAppWidget2);
 
   d->setupUi(this);
-
-  this->setSearchWidgetPopUpMode(false);
 
   //Hide image previewer buttons
   d->NextImageButton->hide();
@@ -436,12 +432,6 @@ QString ctkDICOMAppWidget2::databaseDirectory() const
   return settings.value("DatabaseDirectory").toString();
 }
 
-//----------------------------------------------------------------------------
-bool ctkDICOMAppWidget2::searchWidgetPopUpMode(){
-  Q_D(ctkDICOMAppWidget2);
-  return d->IsSearchWidgetPopUpMode;
-}
-
 //------------------------------------------------------------------------------
 void ctkDICOMAppWidget2::setTagsToPrecache( const QStringList tags)
 {
@@ -462,32 +452,6 @@ const QStringList ctkDICOMAppWidget2::tagsToPrecache()
 ctkDICOMDatabase* ctkDICOMAppWidget2::database(){
   Q_D(ctkDICOMAppWidget2);
   return d->DICOMDatabase.data();
-}
-
-//----------------------------------------------------------------------------
-void ctkDICOMAppWidget2::setSearchWidgetPopUpMode(bool flag){
-  Q_D(ctkDICOMAppWidget2);
-
-  if(flag)
-    {
-    d->SearchDockWidget->setTitleBarWidget(0);
-    d->SearchPopUpButton->show();
-    d->SearchDockWidget->hide();
-    d->SearchDockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-    connect(d->SearchDockWidget, SIGNAL(topLevelChanged(bool)), this, SLOT(onSearchWidgetTopLevelChanged(bool)));
-    connect(d->SearchPopUpButton, SIGNAL(clicked()), this, SLOT(onSearchPopUpButtonClicked()));
-    }
-  else
-    {
-    d->SearchDockWidget->setTitleBarWidget(new QWidget());
-    d->SearchPopUpButton->hide();
-    d->SearchDockWidget->show();
-    d->SearchDockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    disconnect(d->SearchDockWidget, SIGNAL(topLevelChanged(bool)), this, SLOT(onSearchWidgetTopLevelChanged(bool)));
-    disconnect(d->SearchPopUpButton, SIGNAL(clicked()), this, SLOT(onSearchPopUpButtonClicked()));
-    }
-
-  d->IsSearchWidgetPopUpMode = flag;
 }
 
 //----------------------------------------------------------------------------
@@ -1042,35 +1006,4 @@ void ctkDICOMAppWidget2::onImagePreviewDisplayed(int imageID, int count){
   d->PlaySlider->setMinimum(0);
   d->PlaySlider->setMaximum(count-1);
   d->PlaySlider->setValue(imageID);
-}
-
-//----------------------------------------------------------------------------
-void ctkDICOMAppWidget2::onSearchPopUpButtonClicked(){
-  Q_D(ctkDICOMAppWidget2);
-
-  if(d->SearchDockWidget->isFloating())
-    {
-    d->SearchDockWidget->hide();
-    d->SearchDockWidget->setFloating(false);
-    }
-  else
-    {
-    d->SearchDockWidget->setFloating(true);
-    d->SearchDockWidget->adjustSize();
-    d->SearchDockWidget->show();
-    }
-}
-
-//----------------------------------------------------------------------------
-void ctkDICOMAppWidget2::onSearchWidgetTopLevelChanged(bool topLevel){
-  Q_D(ctkDICOMAppWidget2);
-
-  if(topLevel)
-    {
-    d->SearchDockWidget->show();
-    }
-  else
-    {
-    d->SearchDockWidget->hide();
-    }
 }
