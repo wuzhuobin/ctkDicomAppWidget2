@@ -25,7 +25,6 @@
 #include <QObject>
 #include <QSqlDatabase>
 
-#include "ctkDICOMCoreExport.h"
 #include "ctkDICOMDatabase.h"
 
 class ctkDICOMIndexer2Private;

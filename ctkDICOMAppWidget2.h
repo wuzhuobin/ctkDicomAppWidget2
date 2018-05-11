@@ -24,8 +24,6 @@
 // Qt includes 
 #include <QWidget>
 
-#include "ctkDICOMWidgetsExport.h"
-
 class ctkDICOMAppWidget2Private;
 class ctkThumbnailLabel;
 class QModelIndex;
@@ -100,16 +98,14 @@ public Q_SLOTS:
   void onSeriesAdded(QString);
   void onInstanceAdded(QString);
 
-//Q_SIGNALS:
+Q_SIGNALS:
 //  /// Emited when directory is changed
 //  void databaseDirectoryChanged(const QString&);
 //  /// Emited when query/retrieve operation has happened
 //  void queryRetrieveFinished();
 //  /// Emited when the directory import operation has completed
 //  void directoryImported();
-//
-//  void imagesExported(QStringList);
-
+  void imageFilesSent(QStringList imageFiles);
 protected:
     QScopedPointer<ctkDICOMAppWidget2Private> d_ptr;
 protected Q_SLOTS:

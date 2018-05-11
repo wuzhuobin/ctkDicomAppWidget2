@@ -59,10 +59,6 @@
 
 #include "ui_ctkDICOMAppWidget2.h"
 
-//logger
-#include <ctkLogger.h>
-static ctkLogger logger("org.commontk.DICOM.Widgets.ctkDICOMAppWidget2");
-
 Q_DECLARE_METATYPE(QPersistentModelIndex);
 
 //----------------------------------------------------------------------------
@@ -407,7 +403,8 @@ void ctkDICOMAppWidget2::setDatabaseDirectory(const QString& directory)
     }
   catch (std::exception e)
     {
-    std::cerr << "Database error: " << qPrintable(d->DICOMDatabase->lastError()) << "\n";
+	qCritical() << "Database error: " << qPrintable(d->DICOMDatabase->lastError()) << "\n";
+	qCritical() << e.what();
     d->DICOMDatabase->closeDatabase();
     return;
     }
@@ -465,7 +462,7 @@ void ctkDICOMAppWidget2::onFileIndexed(const QString& filePath)
   // Update the progress dialog when the file name changes
   // - also allows for cancel button
   QCoreApplication::instance()->processEvents();
-  qDebug() << "Indexing \n\n\n\n" << filePath <<"\n\n\n";
+  //qDebug() << "Indexing \n\n\n\n" << filePath <<"\n\n\n";
   
 }
 
@@ -485,48 +482,49 @@ void ctkDICOMAppWidget2::on_ActionExport_triggered()
 
   //d->QueryRetrieveWidget->show();
   // d->QueryRetrieveWidget->raise();
-  std::cout << "on Export" << std::endl;
+  //std::cout << "on Export" << std::endl;
   QStringList imageFileNames = d->ExportImagesModel.stringList(); 
   QModelIndexList selection = d->TreeView->selectionModel()->selectedIndexes();
-  if (selection.isEmpty()) {
-	  return;
-  }
-
-    QModelIndex index0 = selection.first().sibling(selection.first().row(), 0);
-    if ( d->DICOMModel.data(index0,ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::SeriesType))
-    {
-      QString seriesUID = d->DICOMModel.data(index0,ctkDICOMModel::UIDRole).toString();
-	  QString _imageFileNames(seriesUID);
-	  _imageFileNames += ":";
-	  _imageFileNames += d->DICOMDatabase->filesForSeries(seriesUID).join(';');
-	  imageFileNames << _imageFileNames;
-    }
-    else if ( d->DICOMModel.data(index0,ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::StudyType))
-    {
-      QString studyUID = d->DICOMModel.data(index0,ctkDICOMModel::UIDRole).toString();
-	  QStringList seriesUIDs = d->DICOMDatabase->seriesForStudy(studyUID);
-	  for (QStringList::const_iterator cit = seriesUIDs.cbegin(); cit != seriesUIDs.cend(); ++cit) {
-		  QString _imageFileNames(*cit);
-		  _imageFileNames += ":";
-		  _imageFileNames += d->DICOMDatabase->filesForSeries(*cit).join(';');
+  //std::cout << selection.size() << std::endl;
+  //foreach(index,selection)
+  if (!selection.isEmpty())
+  {
+	  QModelIndex index0 = selection.first().sibling(selection.first().row(), 0);
+	  if (d->DICOMModel.data(index0, ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::SeriesType))
+	  {
+		  QString seriesUID = d->DICOMModel.data(index0, ctkDICOMModel::UIDRole).toString();
+		  QString _imageFileNames(seriesUID);
+		  _imageFileNames += "\t";
+		  _imageFileNames += d->DICOMDatabase->filesForSeries(seriesUID).join(';');
 		  imageFileNames << _imageFileNames;
 	  }
-    }
-    else if ( d->DICOMModel.data(index0,ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::PatientType))
-    {
-		QString patientUID = d->DICOMModel.data(index0, ctkDICOMModel::UIDRole).toString();
-		QStringList studyUIDs = d->DICOMDatabase->studiesForPatient(patientUID);
-		for (QStringList::const_iterator cit1 = studyUIDs.cbegin(); cit1 != studyUIDs.cend(); ++cit1) {
-			QStringList seriesUIDs = d->DICOMDatabase->seriesForStudy(*cit1);
-			for (QStringList::const_iterator cit2 = seriesUIDs.cbegin(); cit2 != seriesUIDs.cend(); ++cit2) {
-				QString _imageFileNames(*cit2);
-				_imageFileNames += ":";
-				_imageFileNames += d->DICOMDatabase->filesForSeries(*cit2).join(';');
-				imageFileNames << _imageFileNames;
-			}
-		}
-	}
-	d->ExportImagesModel.setStringList(imageFileNames);
+	  else if (d->DICOMModel.data(index0, ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::StudyType))
+	  {
+		  QString studyUID = d->DICOMModel.data(index0, ctkDICOMModel::UIDRole).toString();
+		  QStringList seriesUIDs = d->DICOMDatabase->seriesForStudy(studyUID);
+		  for (QStringList::const_iterator cit = seriesUIDs.cbegin(); cit != seriesUIDs.cend(); ++cit) {
+			  QString _imageFileNames(*cit);
+			  _imageFileNames += "\t";
+			  _imageFileNames += d->DICOMDatabase->filesForSeries(*cit).join(';');
+			  imageFileNames << _imageFileNames;
+		  }
+	  }
+	  else if (d->DICOMModel.data(index0, ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::PatientType))
+	  {
+		  QString patientUID = d->DICOMModel.data(index0, ctkDICOMModel::UIDRole).toString();
+		  QStringList studyUIDs = d->DICOMDatabase->studiesForPatient(patientUID);
+		  for (QStringList::const_iterator cit1 = studyUIDs.cbegin(); cit1 != studyUIDs.cend(); ++cit1) {
+			  QStringList seriesUIDs = d->DICOMDatabase->seriesForStudy(*cit1);
+			  for (QStringList::const_iterator cit2 = seriesUIDs.cbegin(); cit2 != seriesUIDs.cend(); ++cit2) {
+				  QString _imageFileNames(*cit2);
+				  _imageFileNames += "\t";
+				  _imageFileNames += d->DICOMDatabase->filesForSeries(*cit2).join(';');
+				  imageFileNames << _imageFileNames;
+			  }
+		  }
+	  }
+	  d->ExportImagesModel.setStringList(imageFileNames);
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -547,6 +545,12 @@ void ctkDICOMAppWidget2::on_ActionClear_triggered()
 
 void ctkDICOMAppWidget2::on_ActionSend_triggered()
 {
+	Q_D(ctkDICOMAppWidget2);
+	QStringList imageFiles = d->ExportImagesModel.stringList();
+	for (QStringList::iterator it = imageFiles.begin(); it != imageFiles.end(); ++it) {
+		(*it) = it->split('\t').last();
+	}
+	emit this->imageFilesSent(imageFiles);
 }
 
 //----------------------------------------------------------------------------
@@ -563,12 +567,13 @@ void ctkDICOMAppWidget2::on_ActionRemove_triggered()
   Q_D(ctkDICOMAppWidget2);
 
   // d->QueryRetrieveWidget->raise();
-  std::cout << "on remove" << std::endl;
+  //std::cout << "on remove" << std::endl;
   QModelIndexList selection = d->TreeView->selectionModel()->selectedIndexes();
-  std::cout << selection.size() << std::endl;
-  QModelIndex index;
-  foreach(index,selection)
+  //std::cout << selection.size() << std::endl;
+  //foreach(index,selection)
+  if(!selection.isEmpty())
   {
+	  QModelIndex index = selection.first();
     QModelIndex index0 = index.sibling(index.row(), 0);
     if ( d->DICOMModel.data(index0,ctkDICOMModel::TypeRole) == static_cast<int>(ctkDICOMModel::SeriesType))
     {
@@ -585,8 +590,8 @@ void ctkDICOMAppWidget2::on_ActionRemove_triggered()
       QString patientUID = d->DICOMModel.data(index0,ctkDICOMModel::UIDRole).toString();
       d->DICOMDatabase->removePatient(patientUID);
     }
-  }
   d->DICOMModel.reset();
+  }
 }
 
 //----------------------------------------------------------------------------
