@@ -11,20 +11,18 @@
     </li>
   </ul>
   <h2>CTK CMake configure cache arguements for reference</h2>
-  <code>
-  		-DCMAKE_CXX_MP_FLAG:BOOL=ON <br>
-		-DBUILD_DOCUMENTATION:BOOL=OFF <br>
-		-DCTK_BUILD_EXAMPLES:BOOL=OFF <br>
-		-DCTK_BUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS} <br>
-        -DBUILD_TESTING:BOOL=OFF <br>
-        # -DCTK_APPctkDICOM:BOOL=ON <br>
-        # -DCTK_APPctkDICOM2:BOOL=ON <br>
-        -DCTK_ENABLE_DICOM:BOOL=ON <br>
-        -DCTK_LIB_DICOM/Core:BOOL=ON <br>
-        -DCTK_LIB_DICOM/Widgets:BOOL=ON <br>
-        -DCTK_QT_VERSION:STRING=5 <br>
-        -DQt5_DIR:PATH=${Qt5_DIR} <br>
-  </code>
+  <code>-DCMAKE_CXX_MP_FLAG:BOOL=ON</code><br>
+  <code>-DBUILD_DOCUMENTATION:BOOL=OFF </code><br>
+  <code>-DCTK_BUILD_EXAMPLES:BOOL=OFF </code><br>
+  <code>-DCTK_BUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS} </code><br>
+  <code>-DBUILD_TESTING:BOOL=OFF </code><br>
+  <code># -DCTK_APPctkDICOM:BOOL=ON </code><br>
+  <code># -DCTK_APPctkDICOM2:BOOL=ON </code><br>
+  <code>-DCTK_ENABLE_DICOM:BOOL=ON </code><br>
+  <code>-DCTK_LIB_DICOM/Core:BOOL=ON </code><br>
+  <code>-DCTK_LIB_DICOM/Widgets:BOOL=ON </code><br>
+  <code>-DCTK_QT_VERSION:STRING=5 </code><br>
+  <code>-DQt5_DIR:PATH=${Qt5_DIR} </code><br>
   The above arguements was tried in MSVC2015 and GCC 6.3 and succeed. 
 </p>
 </html>
