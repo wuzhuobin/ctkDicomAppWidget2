@@ -26,7 +26,7 @@
 # 	<li>CMake will find all '*.ui' as Qt UI form. </li>
 # 	<li>This template can only build static library. </li>
 # 	<li>If 'main/main.cpp' exists, the project will create both static library files and executable files. </li>
-# 	<li>This CMakeLists is for project with VTK ITK CTK QT dependency only.</li>
+# 	<li>This CMakeLists is for project with VTK ITK QT dependency only.</li>
 # </ul>
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -85,16 +85,11 @@ include(${ITK_USE_FILE})
 find_package(VTK REQUIRED) 
 include(${VTK_USE_FILE})
 
-# CTK
-find_package(CTK REQUIRED)
-include(${CTK_USE_FILE})
-
 # QT
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 # # # # # # # # # # # # # # # # # CHANGE BELOW  # # # # # # # # # # # # # # # # 
 #find_package(Qt5.... REQUIRED)
-find_package(Qt5Xml REQUIRED)
 #find_package(... REQURIED)
 
 # OTHERS
@@ -113,10 +108,9 @@ find_package(Qt5Xml REQUIRED)
 # 	WINDOWS_RESOURCES
 # 	# PATH
 # )
-option(BUILD_EXAMPLE "Build Example" OFF)
-if(BUILD_EXAMPLE)
-	add_subdirectory(ctkDicomAppWidget2Example)
-endif(BUILD_EXAMPLE)
+
+
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # LIBRARIES # # # # # # # # # # # # # # # # # #  
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
@@ -144,10 +138,8 @@ set(
 	SYSTEM_LIBRARIES
 	${VTK_LIBRARIES} 
 	${ITK_LIBRARIES}
-	${CTK_LIBRARIES}
 	Qt5::Core
 	Qt5::Widgets
-	Qt5::Xml
 )
 
 set(
@@ -162,6 +154,7 @@ set(
 	${SYSTEM_LIBRARIES}
 	#OTHERS
 	#...
+	ctkDicomAppWidget2
 )
 
 set(
