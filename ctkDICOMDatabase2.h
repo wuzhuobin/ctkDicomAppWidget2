@@ -20,14 +20,14 @@
 
 #ifndef __ctkDICOMDatabase2_h
 #define __ctkDICOMDatabase2_h
-
+// me 
+#include "ctkdicomappwidget2_export.h"
 // Qt includes
 #include <QObject>
 #include <QStringList>
 #include <QSqlDatabase>
 
 #include "ctkDICOMItem.h"
-#include "ctkDICOMCoreExport.h"
 
 class QDateTime;
 class ctkDICOMDatabase2Private;
@@ -49,7 +49,7 @@ class ctkDICOMAbstractThumbnailGenerator;
 /// a file for each object. The corresponding UIDs are used as filenames.
 /// Thumbnais for each image can be created; if so, they are stored in a directory
 /// parallel to "dicom" directory called "thumbs".
-class ctkDICOMDatabase2 : public QObject
+class CTKDICOMAPPWIDGET2_EXPORT ctkDICOMDatabase2 : public QObject
 {
 
   Q_OBJECT

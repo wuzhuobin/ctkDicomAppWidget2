@@ -12,21 +12,12 @@
 #			the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR	    #
 #			PURPOSE.  See the above copyright notice for more information.		    #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-include(CMakeFindDependencyMacro)
-# ITK
-find_dependency(ITK REQUIRED)
-# include(${ITK_USE_FILE})
-
-# VTK
-find_dependency(VTK REQUIRED) 
-# include(${VTK_USE_FILE})
-
-# QT
-find_dependency(Qt5Core REQUIRED)
-find_dependency(Qt5Widgets REQUIRED)
-# # # # # # # # # # # # # # # # # CHANGE BELOW  # # # # # # # # # # # # # # # # 
-#find_dependency(Qt5.... REQUIRED)
-#find_dependency(... REQURIED)
-
+file(
+    GLOB
+    PROJECT_FIND_CMAKE
+    ${CMAKE_CURRENT_LIST_DIR}/Find*.cmake
+)
+foreach(ONE ${PROJECT_FIND_CMAKE})
+    include(${ONE})
+endforeach(ONE ${PROJECT_FIND_CMAKE})
 include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@.cmake")

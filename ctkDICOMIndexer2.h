@@ -20,7 +20,8 @@
 
 #ifndef __ctkDICOMIndexer2_h
 #define __ctkDICOMIndexer2_h
-
+// me 
+#include "ctkdicomappwidget2_export.h"
 // Qt includes
 #include <QObject>
 #include <QSqlDatabase>
@@ -33,7 +34,7 @@ class ctkDICOMIndexer2Private;
 ///
 /// \brief Indexes DICOM images located in local directory into an Sql database
 ///
-class ctkDICOMIndexer2 : public QObject
+class CTKDICOMAPPWIDGET2_EXPORT ctkDICOMIndexer2 : public QObject
 {
   Q_OBJECT
 public:

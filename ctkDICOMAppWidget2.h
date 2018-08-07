@@ -20,7 +20,8 @@
 
 #ifndef __ctkDICOMAppWidget2_h
 #define __ctkDICOMAppWidget2_h
-
+// me 
+#include "ctkdicomappwidget2_export.h"
 // Qt includes 
 #include <QWidget>
 
@@ -30,7 +31,7 @@ class QModelIndex;
 class ctkDICOMDatabase;
 
 /// \ingroup DICOM_Widgets
-class ctkDICOMAppWidget2 : public QWidget
+class CTKDICOMAPPWIDGET2_EXPORT ctkDICOMAppWidget2 : public QWidget
 {
   Q_OBJECT
   Q_PROPERTY(ctkDICOMDatabase* database READ database)

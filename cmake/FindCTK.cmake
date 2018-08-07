@@ -1,0 +1,9 @@
+# CTK
+find_package(CTK REQUIRED)
+include(${CTK_USE_FILE})
+# LIBRARIES
+list(
+    APPEND
+    PROJECT_LIBRARY
+    ${CTK_LIBRARIES}
+)
