@@ -34,6 +34,11 @@ file(
     PROJECT_QRC
     *.qrc
 )
+list(
+    APPEND
+    PROJECT_QRC
+    ${CMAKE_PROJECT_QRC}
+)
 qt5_add_resources(
     PROJECT_QRC_SRC
     ${PROJECT_QRC}

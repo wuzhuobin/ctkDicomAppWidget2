@@ -1,0 +1,2 @@
+unset(CMAKE_PROJECT_QRC)
+unset(CMAKE_PROJECT_TS)

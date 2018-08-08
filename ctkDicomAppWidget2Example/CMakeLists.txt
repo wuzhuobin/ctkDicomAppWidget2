@@ -45,7 +45,9 @@ endif()
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # SUB_DIRECTORY # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
- 
+if(EXISTS ${PROJECT_SOURCE_DIR}/cmake/SubDirectory.cmake)
+	include(${PROJECT_SOURCE_DIR}/cmake/SubDirectory.cmake)
+endif()
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # OPTIONS # # # # # # # # # # # # # # # # # # # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
