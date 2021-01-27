@@ -1,9 +1,11 @@
-# CTK
-find_package(CTK REQUIRED)
+IF (NOT CTK_FOUND)
+	# CTK
+	find_package(CTK REQUIRED)
+	# LIBRARIES
+	list(
+	    APPEND
+	    PROJECT_LIBRARY
+	    ${CTK_LIBRARIES}
+	)
+ENDIF()
 include(${CTK_USE_FILE})
-# LIBRARIES
-list(
-    APPEND
-    PROJECT_LIBRARY
-    ${CTK_LIBRARIES}
-)
